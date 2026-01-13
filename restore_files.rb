@@ -5,10 +5,10 @@ file_ids = SS::File.all.pluck(:id)
 file_ids.each do |id|
   file = SS::File.find(id) rescue nil
   next if file.nil?
-  next if ::File.exists?(file.path)
+  next if ::File.exist?(file.path)
 
   path = ::File.join(@ss_copy, "restore_files", "#{file.extname}.#{file.extname}")
-  if ::File.exists?(path) && !::File.directory?(path)
+  if ::File.exist?(path) && !::File.directory?(path)
     Fs.binwrite file.path, File.binread(path)
     puts "restore : #{file.filename}"
   else
